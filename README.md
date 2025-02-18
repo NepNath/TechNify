@@ -1,10 +1,10 @@
 # TechNify - Projet Symfony
-## Description du projet
-Ce projet consiste en la création d'un site de e-commerce sous Symfony, centré sur la vente de produits liés à la technologie,   comme des composants électroniques pour la robotique, des équipements pour la mode 3D, des ordinateurs, des jeux, etc.    
+## 📜 Description du projet
+Ce projet consiste en la création d'un site de e-commerce sous Symfony, centré sur la vente de produits liés à la technologie,   comme des composants électroniques pour la robotique, des équipements pour la modélisation 3D, des ordinateurs, des jeux, etc.    
   
 Les utilisateurs peuvent créer un compte, ajouter des produits à la vente, acheter des articles, négocier des prix, et gérer   leurs informations et factures. La plateforme permet également de gérer un panier, d'ajouter des produits favoris, et de suivre   les offres et les commandes.  
 
-## Fonctionnalités principales :
+## 🎯 Fonctionnalités principales :
 1. Page d'accueil avant connexion :
 
 * Affichage des crédits du projet (noms et prénoms des membres).  
@@ -45,8 +45,8 @@ Les utilisateurs peuvent créer un compte, ajouter des produits à la vente, ach
 * Gestion des catégories de produits.
 * Système de notation et commentaires pour les articles achetés.
 
-## Organisation 
-### Outils 
+## 🗒️Organisation 
+### 🛠️ Outils 
 - **Trello :** Détail des tâches à accomplir pour finaliser ce projet, avec une répartition des tâches par jour et par priorité.  
 _[voir notre trello](https://trello.com/invite/b/67b30ba611c16b09abdf386d/ATTI5b99e52d223c500779749ea505392de3180442E7/projet-php-b2s2)_
 

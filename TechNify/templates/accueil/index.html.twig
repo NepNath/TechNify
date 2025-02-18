@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - TechNify{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Bienvenue chez TechNify</h1>
+    <p class="slogan">La marketplace où ton panier se remplit plus vite que ta RAM.</p>
+
+    <div class="card">
+        <h2>Se connecter</h2>
+        <form method="post" action="{{ path('app_login') }}">
+            <input type="email" name="_email" placeholder="adresse mail" required>
+            <input type="password" name="_password" placeholder="mot de passe" required>
+            <button type="submit" class="btn">connexion</button>
+        </form>
+        <a href="{{ path('app_register') }}">Créer un compte</a>
+    </div>
+</div>
+{% endblock %}
