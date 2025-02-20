@@ -6,20 +6,20 @@ controllers:
 
 mes_informations:
     path: /mes-informations
-    controller: App\Controller\MesInformationsController::index
+    controller: App\Controller\ProfilController::mesInformations
 
 mes_produits:
     path: /mes-produits
-    controller: App\Controller\MesProduitsController::index
+    controller: App\Controller\ProfilController::mesProduits
 
 offres_en_attentes:
     path: /offres-en-attentes
-    controller: App\Controller\OffresEnAttentesController::index
+    controller: App\Controller\ProfilController::offresEnAttentes
 
 livraison:
     path: /livraison
-    controller: App\Controller\LivraisonController::index
+    controller: App\Controller\ProfilController::livraison
 
 solde:
     path: /solde
-    controller: App\Controller\SoldeController::index
+    controller: App\Controller\ProfilController::solde
