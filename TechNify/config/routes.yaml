@@ -3,3 +3,23 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+mes_informations:
+    path: /mes-informations
+    controller: App\Controller\ProfilController::mesInformations
+
+mes_produits:
+    path: /mes-produits
+    controller: App\Controller\ProfilController::mesProduits
+
+offres_en_attentes:
+    path: /offres-en-attentes
+    controller: App\Controller\ProfilController::offresEnAttentes
+
+livraison:
+    path: /livraison
+    controller: App\Controller\ProfilController::livraison
+
+solde:
+    path: /solde
+    controller: App\Controller\ProfilController::solde

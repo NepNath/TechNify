@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/profil.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="profile-container">
+    <div class="profile-header">
+    
+    </div>
+
+    <div class="profile-buttons">
+        <a href="{{ path('mes_informations') }}" class="button">Mes informations</a>
+        <a href="{{ path('mes_produits') }}" class="button">Mes produits</a>
+        <a href="{{ path('offres_en_attentes') }}" class="button">Offres en attentes</a>
+        <a href="{{ path('livraison') }}" class="button">Livraison</a>
+        <a href="{{ path('solde') }}" class="button">Solde</a>
+    </div>
+</div>
+{% endblock %}
