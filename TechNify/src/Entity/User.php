@@ -6,10 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,10 +29,10 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $balance = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $role = null;
 
     #[ORM\Column]
@@ -53,6 +57,8 @@ class User
     {
         $this->transactions = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -203,4 +209,20 @@ class User
 
         return $this;
     }
+    
+    public function getRoles(): array
+    {
+        return [$this->role ?? 'ROLE_USER']; // Retourne le rôle stocké ou "ROLE_USER" par défaut
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Cette méthode est obligatoire mais peut rester vide
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->pseudo; // Utilise le pseudo comme identifiant unique
+    }
+
 }
