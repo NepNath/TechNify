@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ProfilController extends AbstractController
 {
-    #[Route('/profil', name: 'app_profil')]
+    #[Route('/profil', name: 'profil')]
     public function index(): Response
     {
         // recup luser co 
@@ -47,5 +47,11 @@ final class ProfilController extends AbstractController
     {
         return $this->render('profil/solde.html.twig');
     }
+    #[Route('/ajout-solde', name: 'ajout_solde')]
+    public function ajoutSolde(): Response
+    {
+    return $this->render('profil/ajout_solde.html.twig');
+    }
+
 }
 

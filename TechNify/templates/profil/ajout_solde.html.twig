@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout de Solde{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/ajout_solde.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="ajout-solde-container">
+    <div class="solde-info">
+        <div class="solde-actuel">
+            Solde actuel: <span class="solde-montant">0</span> 
+        </div>
+    </div>
+    <div class="info-container">
+    <a href="{{ path('solde') }}" class="back-button">
+        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+            <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+        </svg>
+        <span>Back</span>
+    </a>
+    <div class="modal">
+        <form class="form" id="ajout-solde-form">
+            <div class="credit-card-info--form">
+                <div class="input_container">
+                    <label for="card_name" class="input_label">Card holder full name</label>
+                    <input id="card_name" class="input_field" type="text" name="card_name" placeholder="Enter your full name">
+                </div>
+                <div class="input_container">
+                    <label for="card_number" class="input_label">Card Number</label>
+                    <input id="card_number" class="input_field" type="number" name="card_number" placeholder="0000 0000 0000 0000">
+                </div>
+                <div class="input_container">
+                    <label for="expiry_date" class="input_label">Expiry Date / CVV</label>
+                    <div class="split">
+                        <input id="expiry_date" class="input_field" type="text" name="expiry_date" placeholder="01/23">
+                        <input id="cvv" class="input_field" type="number" name="cvv" placeholder="CVV">
+                    </div>
+                </div>
+                <div class="input_container">
+                    <label for="montant" class="input_label">Montant à ajouter (€)</label>
+                    <input id="montant" class="input_field" type="number" name="montant" placeholder="15">
+                </div>
+            </div>
+            <button type="submit" class="purchase--btn">Checkout</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('ajout-solde-form').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+    const montant = parseFloat(document.getElementById('montant').value);
+
+    const soldeActuelElement = document.querySelector('.solde-montant');//recup solde act
+
+    let soldeActuel = parseFloat(soldeActuelElement.textContent.replace('+', '').replace(',', '.'));//conv le solde
+
+    if (!isNaN(montant)) {//si cest pas valide
+        // Ajoute le montant au solde actuel
+        soldeActuel += montant;
+
+        soldeActuelElement.textContent = `+${soldeActuel.toFixed(2).replace('.', ',')}`;//maj
+    } else {
+        alert('Veuillez entrer un montant valide.');//mess erreur qui pop
+    }
+});
+</script>
+
+{% endblock %}

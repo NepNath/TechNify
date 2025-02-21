@@ -23,3 +23,7 @@ livraison:
 solde:
     path: /solde
     controller: App\Controller\ProfilController::solde
+
+ajout_solde:
+    path: /ajout-solde
+    controller: App\Controller\ProfilController::ajoutSolde
