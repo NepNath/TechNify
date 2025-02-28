@@ -27,3 +27,10 @@ solde:
 ajout_solde:
     path: /ajout-solde
     controller: App\Controller\ProfilController::ajoutSolde
+
+logout:
+    path: /logout
+
+panier:
+    path: /panier
+    controller: App\Controller\PanierController::index
