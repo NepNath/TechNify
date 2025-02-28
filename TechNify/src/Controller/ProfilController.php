@@ -47,6 +47,7 @@ final class ProfilController extends AbstractController
     {
         return $this->render('profil/solde.html.twig');
     }
+    
     #[Route('/ajout-solde', name: 'ajout_solde')]
     public function ajoutSolde(): Response
     {
