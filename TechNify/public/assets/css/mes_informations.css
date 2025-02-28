@@ -1,0 +1,42 @@
+body {
+    background-color: #252525;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3em;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    border: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.back-button > svg {
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 20px;
+    transition: all 0.4s ease-in;
+}
+
+.back-button:hover > svg {
+    font-size: 1.2em;
+    transform: translateX(-5px);
+}
+
+.back-button:hover {
+    box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+    transform: translateY(-2px);
+}

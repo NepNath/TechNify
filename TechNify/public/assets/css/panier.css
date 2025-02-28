@@ -1,0 +1,164 @@
+body {
+    background-color: #222;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3em;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    border: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.back-button > svg {
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 20px;
+    transition: all 0.4s ease-in;
+}
+
+.back-button:hover > svg {
+    font-size: 1.2em;
+    transform: translateX(-5px);
+}
+
+.back-button:hover {
+    box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+    transform: translateY(-2px);
+}
+
+
+.panier-container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.panier-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.solde {
+    font-size: 18px;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.montant {
+    color: #4fa3ff;
+    font-size: 24px;
+}
+
+
+.prix {
+    color: #4fa3ff;
+    font-size: 16px;
+}
+
+.quantite {
+    display: flex;
+    align-items: center;
+}
+
+.quantite button {
+    background: #4fa3ff;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.total {
+    background: #4fa3ff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: auto; 
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    text-align: center;
+}
+
+
+.payer {
+    background: white;
+    color: #4fa3ff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.oui {
+    background: rgb(0, 217, 255);
+    color: white;
+}
+
+.non {
+    background: red;
+    color: white;
+}
+
+.confirmation-notification {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: green;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
