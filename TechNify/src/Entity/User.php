@@ -6,13 +6,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['pseudo'], message: 'There is already an account with this pseudo')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,12 +23,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Le pseudo ne peut pas être vide.')]
+    #[Assert\Length(min: 3, max: 50, minMessage: 'Le pseudo doit contenir au moins {{ limit }} caractères.')]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'L\'email ne peut pas être vide.')]
+    #[Assert\Email(message: 'L\'email "{{ value }}" n\'est pas valide.')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le mot de passe ne peut pas être vide.')]
+    #[Assert\Length(min: 6, max: 255, minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.')]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
@@ -52,12 +60,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'seller')]
     private Collection $products;
-
-    /**
-     * @var Collection<int, Admin>
-     */
-    #[ORM\OneToMany(targetEntity: Admin::class, mappedBy: 'user')]
-    private Collection $admins;
 
     /**
      * @var Collection<int, Address>
@@ -93,14 +95,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->transactions = new ArrayCollection();
         $this->products = new ArrayCollection();
-        $this->created_at = new \DateTimeImmutable();
-        $this->updated_at = new \DateTimeImmutable();
-        $this->admins = new ArrayCollection();
         $this->addresses = new ArrayCollection();
         $this->favorites = new ArrayCollection();
         $this->negotiations = new ArrayCollection();
         $this->invoices = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -149,7 +150,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->balance;
     }
 
-    public function setBalance(string $balance): static
+    public function setBalance(?string $balance): static
     {
         $this->balance = $balance;
 
@@ -161,7 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->role;
     }
 
-    public function setRole(string $role): static
+    public function setRole(?string $role): static
     {
         $this->role = $role;
 
@@ -246,51 +247,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($product->getSeller() === $this) {
                 $product->setSeller(null);
-            }
-        }
-
-        return $this;
-    }
-    
-    public function getRoles(): array
-    {
-        return [$this->role ?? 'ROLE_USER']; // Retourne le rôle stocké ou "ROLE_USER" par défaut
-    }
-
-    public function eraseCredentials(): void
-    {
-        // Cette méthode est obligatoire mais peut rester vide
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return $this->pseudo; // Utilise le pseudo comme identifiant unique
-    }
-
-    /**
-     * @return Collection<int, Admin>
-     */
-    public function getAdmins(): Collection
-    {
-        return $this->admins;
-    }
-
-    public function addAdmin(Admin $admin): static
-    {
-        if (!$this->admins->contains($admin)) {
-            $this->admins->add($admin);
-            $admin->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdmin(Admin $admin): static
-    {
-        if ($this->admins->removeElement($admin)) {
-            // set the owning side to null (unless already changed)
-            if ($admin->getUser() === $this) {
-                $admin->setUser(null);
             }
         }
 
@@ -447,4 +403,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    // Méthodes requises par UserInterface
+
+    public function getRoles(): array
+    {
+        return [$this->role ?? 'ROLE_USER']; // Retourne le rôle stocké ou "ROLE_USER" par défaut
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Cette méthode est obligatoire mais peut rester vide
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->pseudo; // Utilise le pseudo comme identifiant unique
+    }
 }
