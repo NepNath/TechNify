@@ -20,9 +20,13 @@ class User
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'L\'email ne peut pas être vide.')]
+    #[Assert\Email(message: 'L\'email "{{ value }}" n\'est pas valide.')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le mot de passe ne peut pas être vide.')]
+    #[Assert\Length(min: 6, max: 255, minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.')]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
@@ -81,6 +85,8 @@ class User
         $this->favorites = new ArrayCollection();
         $this->invoices = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -129,7 +135,7 @@ class User
         return $this->balance;
     }
 
-    public function setBalance(string $balance): static
+    public function setBalance(?string $balance): static
     {
         $this->balance = $balance;
 
@@ -141,7 +147,7 @@ class User
         return $this->role;
     }
 
-    public function setRole(string $role): static
+    public function setRole(?string $role): static
     {
         $this->role = $role;
 
