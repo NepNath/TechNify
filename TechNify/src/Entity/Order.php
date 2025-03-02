@@ -23,12 +23,6 @@ class Order
     #[ORM\Column(length: 50)]
     private ?string $status = null;
 
-    /**
-     * @var Collection<int, Invoice>
-     */
-    #[ORM\OneToMany(targetEntity: Invoice::class, mappedBy: 'userOrder')]
-    private Collection $invoices;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -37,6 +31,12 @@ class Order
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?User $user = null;
+
+    /**
+     * @var Collection<int, Invoice>
+     */
+    #[ORM\OneToMany(targetEntity: Invoice::class, mappedBy: 'userOrder')]
+    private Collection $invoices;
 
     /**
      * @var Collection<int, OrderItem>
@@ -86,36 +86,6 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection<int, Invoice>
-     */
-    public function getInvoices(): Collection
-    {
-        return $this->invoices;
-    }
-
-    public function addInvoice(Invoice $invoice): static
-    {
-        if (!$this->invoices->contains($invoice)) {
-            $this->invoices->add($invoice);
-            $invoice->setUserOrder($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInvoice(Invoice $invoice): static
-    {
-        if ($this->invoices->removeElement($invoice)) {
-            // set the owning side to null (unless already changed)
-            if ($invoice->getUserOrder() === $this) {
-                $invoice->setUserOrder(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -148,6 +118,36 @@ class Order
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Invoice>
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoice(Invoice $invoice): static
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices->add($invoice);
+            $invoice->setUserOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): static
+    {
+        if ($this->invoices->removeElement($invoice)) {
+            // set the owning side to null (unless already changed)
+            if ($invoice->getUserOrder() === $this) {
+                $invoice->setUserOrder(null);
+            }
+        }
 
         return $this;
     }

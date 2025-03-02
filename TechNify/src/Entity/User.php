@@ -6,22 +6,18 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $pseudo = null;
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -29,17 +25,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $balance = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 50)]
     private ?string $role = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Transaction>
@@ -48,34 +44,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $transactions;
 
     /**
-     * @var Collection<int, Product>
-     */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'seller')]
-    private Collection $products;
-
-    /**
-     * @var Collection<int, Admin>
-     */
-    #[ORM\OneToMany(targetEntity: Admin::class, mappedBy: 'user')]
-    private Collection $admins;
-
-    /**
      * @var Collection<int, Address>
      */
     #[ORM\OneToMany(targetEntity: Address::class, mappedBy: 'user')]
     private Collection $addresses;
 
     /**
+     * @var Collection<int, Product>
+     */
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'seller')]
+    private Collection $products;
+
+    /**
      * @var Collection<int, Favorite>
      */
     #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user')]
     private Collection $favorites;
-
-    /**
-     * @var Collection<int, Negotiation>
-     */
-    #[ORM\OneToMany(targetEntity: Negotiation::class, mappedBy: 'user')]
-    private Collection $negotiations;
 
     /**
      * @var Collection<int, Invoice>
@@ -92,13 +76,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
-        $this->products = new ArrayCollection();
-        $this->created_at = new \DateTimeImmutable();
-        $this->updated_at = new \DateTimeImmutable();
-        $this->admins = new ArrayCollection();
         $this->addresses = new ArrayCollection();
+        $this->products = new ArrayCollection();
         $this->favorites = new ArrayCollection();
-        $this->negotiations = new ArrayCollection();
         $this->invoices = new ArrayCollection();
         $this->orders = new ArrayCollection();
     }
@@ -108,14 +88,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getPseudo(): ?string
+    public function getUsername(): ?string
     {
-        return $this->pseudo;
+        return $this->username;
     }
 
-    public function setPseudo(string $pseudo): static
+    public function setUsername(string $username): static
     {
-        $this->pseudo = $pseudo;
+        $this->username = $username;
 
         return $this;
     }
@@ -170,24 +150,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -216,81 +196,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($transaction->getUser() === $this) {
                 $transaction->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): static
-    {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setSeller($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): static
-    {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getSeller() === $this) {
-                $product->setSeller(null);
-            }
-        }
-
-        return $this;
-    }
-    
-    public function getRoles(): array
-    {
-        return [$this->role ?? 'ROLE_USER']; // Retourne le rôle stocké ou "ROLE_USER" par défaut
-    }
-
-    public function eraseCredentials(): void
-    {
-        // Cette méthode est obligatoire mais peut rester vide
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return $this->pseudo; // Utilise le pseudo comme identifiant unique
-    }
-
-    /**
-     * @return Collection<int, Admin>
-     */
-    public function getAdmins(): Collection
-    {
-        return $this->admins;
-    }
-
-    public function addAdmin(Admin $admin): static
-    {
-        if (!$this->admins->contains($admin)) {
-            $this->admins->add($admin);
-            $admin->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdmin(Admin $admin): static
-    {
-        if ($this->admins->removeElement($admin)) {
-            // set the owning side to null (unless already changed)
-            if ($admin->getUser() === $this) {
-                $admin->setUser(null);
             }
         }
 
@@ -328,6 +233,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): static
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setSeller($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): static
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getSeller() === $this) {
+                $product->setSeller(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Favorite>
      */
     public function getFavorites(): Collection
@@ -351,36 +286,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($favorite->getUser() === $this) {
                 $favorite->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Negotiation>
-     */
-    public function getNegotiations(): Collection
-    {
-        return $this->negotiations;
-    }
-
-    public function addNegotiation(Negotiation $negotiation): static
-    {
-        if (!$this->negotiations->contains($negotiation)) {
-            $this->negotiations->add($negotiation);
-            $negotiation->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNegotiation(Negotiation $negotiation): static
-    {
-        if ($this->negotiations->removeElement($negotiation)) {
-            // set the owning side to null (unless already changed)
-            if ($negotiation->getUser() === $this) {
-                $negotiation->setUser(null);
             }
         }
 
@@ -446,5 +351,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 }

@@ -31,31 +31,23 @@ class Product
     #[ORM\Column(length: 50)]
     private ?string $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null;
-
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $seller = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?User $seller = null;
+
     /**
      * @var Collection<int, Favorite>
      */
     #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'product')]
     private Collection $favorites;
-
-    /**
-     * @var Collection<int, Negotiation>
-     */
-    #[ORM\OneToMany(targetEntity: Negotiation::class, mappedBy: 'product')]
-    private Collection $negotiations;
 
     /**
      * @var Collection<int, OrderItem>
@@ -66,7 +58,6 @@ class Product
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
-        $this->negotiations = new ArrayCollection();
         $this->orderItems = new ArrayCollection();
     }
 
@@ -135,30 +126,6 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getSeller(): ?User
-    {
-        return $this->seller;
-    }
-
-    public function setSeller(?User $seller): static
-    {
-        $this->seller = $seller;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -179,6 +146,30 @@ class Product
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSeller(): ?User
+    {
+        return $this->seller;
+    }
+
+    public function setSeller(?User $seller): static
+    {
+        $this->seller = $seller;
 
         return $this;
     }
@@ -207,36 +198,6 @@ class Product
             // set the owning side to null (unless already changed)
             if ($favorite->getProduct() === $this) {
                 $favorite->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Negotiation>
-     */
-    public function getNegotiations(): Collection
-    {
-        return $this->negotiations;
-    }
-
-    public function addNegotiation(Negotiation $negotiation): static
-    {
-        if (!$this->negotiations->contains($negotiation)) {
-            $this->negotiations->add($negotiation);
-            $negotiation->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNegotiation(Negotiation $negotiation): static
-    {
-        if ($this->negotiations->removeElement($negotiation)) {
-            // set the owning side to null (unless already changed)
-            if ($negotiation->getProduct() === $this) {
-                $negotiation->setProduct(null);
             }
         }
 

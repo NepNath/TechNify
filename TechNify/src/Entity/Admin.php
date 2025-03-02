@@ -14,7 +14,7 @@ class Admin
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'admins')]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
     public function getId(): ?int

@@ -18,7 +18,7 @@ class Invoice
     private ?string $totalAmount = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $billingAddress = null;
+    private ?string $billingAdress = null;
 
     #[ORM\Column(length: 100)]
     private ?string $city = null;
@@ -30,10 +30,10 @@ class Invoice
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'invoices')]
-    private ?Order $userOrder = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'invoices')]
-    private ?User $user = null;
+    private ?Order $userOrder = null;
 
     public function getId(): ?int
     {
@@ -52,14 +52,14 @@ class Invoice
         return $this;
     }
 
-    public function getBillingAddress(): ?string
+    public function getBillingAdress(): ?string
     {
-        return $this->billingAddress;
+        return $this->billingAdress;
     }
 
-    public function setBillingAddress(string $billingAddress): static
+    public function setBillingAdress(string $billingAdress): static
     {
-        $this->billingAddress = $billingAddress;
+        $this->billingAdress = $billingAdress;
 
         return $this;
     }
@@ -100,18 +100,6 @@ class Invoice
         return $this;
     }
 
-    public function getUserOrder(): ?Order
-    {
-        return $this->userOrder;
-    }
-
-    public function setUserOrder(?Order $userOrder): static
-    {
-        $this->userOrder = $userOrder;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -120,6 +108,18 @@ class Invoice
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUserOrder(): ?Order
+    {
+        return $this->userOrder;
+    }
+
+    public function setUserOrder(?Order $userOrder): static
+    {
+        $this->userOrder = $userOrder;
 
         return $this;
     }
