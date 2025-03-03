@@ -46,11 +46,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\PrePersist]
-    public function setCreatedAtValue(): void{
-    if ($this->createdAt === null) {
-        $this->createdAt = new \DateTimeImmutable();
+    public function setCreatedAtValue(): void
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
+        if ($this->updatedAt === null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
-    }
+
 
     /**
      * @var Collection<int, Transaction>

@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+    {% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
+    {% endblock %}
+
 {% block title %} Liste des Produits {% endblock %}
 
 {% block body %}
