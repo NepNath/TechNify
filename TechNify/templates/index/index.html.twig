@@ -28,9 +28,10 @@
             <p>{{ product.name }} - {{ product.price }}€</p>
         {% else %}
             <p>Aucun produit disponible. </p>
+        {% endfor %}
     </div> 
     <div class = "user-products">
-        <a href="{{ path('panier') }}" class="btn">accéder à votre panier</a>
+        <a href="{{ path('cart_index') }}" class="btn">accéder à votre panier</a>
     </div>
-        {% endfor %}
+
 {% endblock %}
