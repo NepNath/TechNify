@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ProductRepository;
+use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,15 +39,35 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart/add/{id}', name: 'cart_add')]
-    public function add($id, SessionInterface $session): Response
+    public function add(Product $product, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
-        $cart[$id] = ($cart[$id] ?? 0) + 1;
+
+        $productId = $product->getId();
+
+        if (!isset($cart[$productId])) {
+            $cart[$productId] = [
+                'product' => $product,
+                'quantity' => 1
+            ];
+        } else {
+            $cart[$productId]['quantity']++;
+        }
+
         $session->set('cart', $cart);
 
-        return $this->redirectToRoute('cart_index');
+        return $this->redirectToRoute('cart_show');
     }
 
+    #[Route('/cart', name: 'cart_show')]
+    public function show(SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+
+        return $this->render('cart/cart.html.twig', [
+            'cart' => $cart
+        ]);
+    }
     #[Route('/cart/remove/{id}', name: 'cart_remove')]
     public function remove($id, SessionInterface $session): Response
     {
@@ -60,7 +81,6 @@ class CartController extends AbstractController
 
         return $this->redirectToRoute('cart_index');
     }
-
     #[Route('/cart/update/{id}', name: 'cart_update', methods: ['POST'])]
     public function update($id, Request $request, SessionInterface $session): Response
     {
