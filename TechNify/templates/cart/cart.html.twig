@@ -39,8 +39,7 @@
                         <td class="prix">{{ item.product.price }} €</td>
                         <td>
                             <form action="{{ path('cart_update', {'id': item.product.id}) }}" method="post">
-                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                                <button type="submit">Modifier</button>
+                                {{ item.quantity }}
                             </form>
                         </td>
                         <td class="montant">{{ item.product.price * item.quantity }} €</td>
@@ -53,11 +52,11 @@
             </table>
 
             <div class="total">
-                <h3 class="montant">Total : {{ total }} €</h3>
+                <h3 class="montant">Total : {{ total is defined ? total : 0 }} €</h3>
                 <button class="payer">💳 Commander</button>
             </div>
 
-            <a class="back-button" href="{{ path('homepage') }}">
+            <a class="back-button" href="{{ path('app_index') }}">
                 ← Retour
             </a>
         {% endif %}
