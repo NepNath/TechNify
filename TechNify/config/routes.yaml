@@ -19,7 +19,7 @@ offres_en_attentes:
 livraison:
     path: /livraison
     controller: App\Controller\ProfilController::livraison
-
+    
 solde:
     path: /solde
     controller: App\Controller\ProfilController::solde
@@ -27,7 +27,6 @@ solde:
 ajout_solde:
     path: /ajout-solde
     controller: App\Controller\ProfilController::ajoutSolde
-
 logout:
     path: /logout
 

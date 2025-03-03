@@ -1,8 +1,7 @@
 <?php
-// src/Form/UserType.php
+
 namespace App\Form;
 
-// src/Form/UserType.php
 namespace App\Form;
 
 use App\Entity\User;
@@ -15,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)         
     {
         $builder
             ->add('username', TextType::class)

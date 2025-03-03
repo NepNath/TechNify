@@ -14,5 +14,9 @@
         </svg>
         <span>Back</span>
     </a>
+
+    <h1>Mon Solde</h1>
+    <p>Solde actuel: +{{ user.balance|number_format(2, ',', ' ') }} €</p>
+    <a href="{{ path('ajout_solde') }}" class="btn btn-primary">Ajouter du solde</a>
 </div>
 {% endblock %}
