@@ -1,13 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription | TechNify{% endblock %}
 
 {% block body %}
-    <h1>Inscription</h1>
-    {{ form_start(form) }}
-        {{ form_row(form.username) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.password) }}
-        {{ form_row(form.save) }}
-    {{ form_end(form) }}
+    <link rel="stylesheet" href="{{ asset('assets/css/register.css') }}">
+
+    <div class="register-container">
+        <div class="sidebar">
+            <div class="logo">
+                {{ include('logo.svg.twig') }}
+            </div>
+        </div>
+        <div class="register-form">
+            <h2>Bienvenue dans la seule boutique<br> où on sait que 8 Go de RAM,<br> c'est jamais assez.</h2>
+            
+            <form method="post">
+                <input type="text" name="pseudo" placeholder="Pseudo" required>
+                <div class="name-fields">
+                    <input type="text" name="nom" placeholder="Nom" required>
+                    <input type="text" name="prenom" placeholder="Prénom" required>
+                </div>
+                <input type="text" name="adresse" placeholder="Adresse de livraison" required>
+                <div class="location-fields">
+                    <input type="text" name="ville" placeholder="Ville" required>
+                    <input type="text" name="code_postal" placeholder="Code Postal" required>
+                </div>
+                <input type="email" name="email" placeholder="Adresse Mail" required>
+                <input type="tel" name="telephone" placeholder="Numéro de Téléphone" required>
+                <input type="password" name="password" placeholder="Mot De Passe" required>
+
+                <button type="submit">Créer mon compte</button>
+            </form>
+            
+            <p class="login-link">> Déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a></p>
+            <p class="credits">> <a href="#">Crédits</a></p>
+        </div>
+    </div>
 {% endblock %}
