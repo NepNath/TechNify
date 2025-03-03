@@ -1,49 +1,82 @@
 # TechNify - Projet Symfony
 ## 📜 Description du projet
+
+Découvrez Technify : La Marcketplace o$ù ton panier se remplit plus vite que ta RAM!
+
 Ce projet consiste en la création d'un site de e-commerce sous Symfony, centré sur la vente de produits liés à la technologie,   comme des composants électroniques pour la robotique, des équipements pour la modélisation 3D, des ordinateurs, des jeux, etc.    
-  
-Les utilisateurs peuvent créer un compte, ajouter des produits à la vente, acheter des articles, négocier des prix, et gérer   leurs informations et factures. La plateforme permet également de gérer un panier, d'ajouter des produits favoris, et de suivre   les offres et les commandes.  
 
 ## 🎯 Fonctionnalités principales :
-1. Page d'accueil avant connexion :
-
-* Affichage des crédits du projet (noms et prénoms des membres).  
-* Connexion et création de compte via adresse mail, pseudo et mot de passe.
+Les utilisateurs peuvent :
+* créer un compte,   
+* ajouter des produits à la vente,   
+* mettre des articles dans leur panier,   
+* augmenter leur solde,  
+* gérer leurs informations, 
+* consulter leur factures.  
   
-### Page d'accueil après connexion :
+### Page inscription `/login`  et connection `/register` :
 
-* Affichage des catégories, barre de recherche, panier et photo de profil.
-* Affichage des produits mis en favoris et des suggestions de produits à la vente.
+Pour accéder au site créez vous un compte avec une adresse mail et un mot de passe ainsi qu'un nom d'utilisateur.  
+Si vous avez déjà un compte connectez vous grâce à l'adresse mail et mot de passe que vous aviez renseigné.
 
-### Pages produits :
+### Pages home `/` :
 
-* Description détaillée d’un article, possibilité de le mettre dans son panier, le mettre en favoris ou faire une offre de négociation de prix.
-* Informations supplémentaires : prix, date de publication.
+retrouvez les produits en vente ainsi que le bouton pour accéder à l'interface de votre profil.
 
-### Page de profil utilisateur :
+### Page profil utilisateur `/profil`:
+menu où vous retrouverez des boutons pour accéder à : 
+* vos informations personnelles avec possibilité de les modifiers 
+* consultez votre solde avec la possibilité de l'augmenter 
+* bouton déconnexion 
 
-* Affichage du pseudo et de l'adresse email de l'utilisateur.
-* Historique des achats avec informations sur les factures (prix initial, prix final après négociation).
-* Liste des produits en vente avec possibilité d’ajouter de nouveaux produits (photo, titre, description, prix).
-  
-### Page de gestion de négociation :
+### Page de gestion du solde utilisateur `/solde` et `ajout-solde` :
 
-* Affichage des offres de négociation reçues et envoyées par l'utilisateur, avec statut (en attente, accepté, refusé).
-* Débit immédiat du solde en cas d'acceptation de l'offre.
-
-### Page de gestion du solde utilisateur :
-
-* Suivi du solde actuel et historique des transactions.
+* Suivi du solde 
 * Option pour ajouter de l'argent au solde de l'utilisateur.
 
-### Fonctionnalités administratives :
+## Pré-requis
 
-* Gestion des utilisateurs et des produits (modification, suppression) par un administrateur.
-* Fonctionnalités bonus (optionnelles) :
-* Recherche avancée d'articles.
-* Gestion de stock des articles.
-* Gestion des catégories de produits.
-* Système de notation et commentaires pour les articles achetés.
+Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur votre machine :
+
+* PHP 8.1+ (avec les extensions intl, pdo_mysql, mbstring)
+* Composer (gestionnaire de dépendances PHP)
+* Symfony CLI (optionnel mais recommandé)
+* MySQL ou SQLite pour la base de données
+
+## 🚀 Installation et lancement du projet
+* 1️⃣ Cloner le projet
+```
+git clone https://github.com/NepNath/TechNify.git
+cd TechNify
+```
+* 2️⃣ Installer les dépendances PHP
+```
+composer install
+```
+* 3️⃣ Configurer l'environnement
+Copiez le fichier .env et personnalisez les variables de connexion à la base de données :
+```
+cp .env .env.local
+```
+Dans .env.local, ajustez la ligne :
+
+```
+DATABASE_URL="mysql://root:root@127.0.0.1:3306/db?serverVersion=8.0"
+```
+ Remplacez le deuxieme root par votre pseudo  
+* 4️⃣ Créer la base de données et exécuter les migrations
+```
+php bin/console doctrine:database:create
+```
+```
+php bin/console doctrine:migrations:migrate
+```
+* 5️⃣ Lancer le serveur Symfony
+```
+php -S 127.0.0.1:8000 -t public
+```
+Le site est  accessible sur : http://127.0.0.1:8000
+
 
 ## 🗒️Organisation 
 ### 🛠️ Outils 
@@ -54,3 +87,7 @@ _[voir notre trello](https://trello.com/invite/b/67b30ba611c16b09abdf386d/ATTI5b
 
 - **Google docs :**  Rédaction de la structure du projet, détaillant le contenu de chaque page du site, les fonctionnalités à implémenter, ainsi que les éléments à inclure pour chaque page. Le document associe nos idées et les exigences de la consigne afin de ne rien oublier tout en intégrant nos choix de développement.  
 _[voir notre doc](https://docs.google.com/document/d/1FaXzBN4YZ_2sjfRfo6XNRWGkjd9NBXn-jPM28cExxmk/edit?usp=sharing)_
+
+
+
+_Merci de l'attention que vous porterez à notre projet !_
