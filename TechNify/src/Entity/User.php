@@ -46,11 +46,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\PrePersist]
-    public function setCreatedAtValue(): void{
-    if ($this->createdAt === null) {
-        $this->createdAt = new \DateTimeImmutable();
+    public function setCreatedAtValue(): void
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
+        if ($this->updatedAt === null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
-    }
+
 
     /**
      * @var Collection<int, Transaction>
@@ -87,6 +92,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user')]
     private Collection $orders;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Address $adress = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Address $address = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Address $city = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Address $postalCode = null;
 
     public function __construct()
     {
@@ -380,6 +397,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdress(): ?Address
+    {
+        return $this->adress;
+    }
+
+    public function setAdress(?Address $adress): static
+    {
+        $this->adress = $adress;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?Address
+    {
+        return $this->city;
+    }
+
+    public function setCity(?Address $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?Address
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(?Address $postalCode): static
+    {
+        $this->postalCode = $postalCode;
 
         return $this;
     }

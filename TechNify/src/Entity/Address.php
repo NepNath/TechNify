@@ -14,7 +14,7 @@ class Address
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adressLine = null;
+    private ?string $address = null;
 
     #[ORM\Column(length: 100)]
     private ?string $city = null;
@@ -36,14 +36,14 @@ class Address
         return $this->id;
     }
 
-    public function getAdressLine(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adressLine;
+        return $this->address;
     }
 
-    public function setAdressLine(string $adressLine): static
+    public function setAddress(string $address): static
     {
-        $this->adressLine = $adressLine;
+        $this->address = $address;
 
         return $this;
     }
