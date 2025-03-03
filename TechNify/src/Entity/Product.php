@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Product
 {
     #[ORM\Id]
@@ -31,10 +32,10 @@ class Product
     #[ORM\Column(length: 50)]
     private ?string $status = null;
 
-    #[ORM\Column(type:'datetime', nullable:true)]
+    #[ORM\Column(type:'datetime_immutable', nullable:true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type:'datetime', nullable:true)]
+    #[ORM\Column(type:'datetime_immutable', nullable:true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -44,10 +45,12 @@ class Product
     private ?User $seller = null;
 
     #[ORM\PrePersist]
-    public function setCreatedAtValue(): void
-    {
-    $this->createdAt = new \DateTimeImmutable();
+    public function setCreatedAtValue(): void{
+    if ($this->createdAt === null) {
+        $this->createdAt = new \DateTimeImmutable();
     }
+    }
+
 
 
     /**

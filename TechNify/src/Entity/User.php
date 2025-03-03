@@ -8,9 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[ORM\HasLifecycleCallbacks]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,7 +34,7 @@ class User
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $balance = null;
+    private ?string $balance = '0.00';
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $role = null;
@@ -41,6 +44,13 @@ class User
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void{
+    if ($this->createdAt === null) {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+    }
 
     /**
      * @var Collection<int, Transaction>
@@ -93,6 +103,21 @@ class User
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getRoles(): array
+    {
+        return [$this->role ?? 'user'];
+    }
+
+    public function eraseCredentials(): void
+    {
+        // $this->plainPassword = null;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 
     public function getUsername(): ?string
