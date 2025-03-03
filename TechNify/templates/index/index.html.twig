@@ -9,11 +9,30 @@
         <meta charset="UTF-8">
         <title>{% block title %}Login Page{% endblock %}</title>
     </head>
+{% block body %}
+    <div class="login-container">
+        <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" class="logo">
+      
+            {% if app.user %}
+            <a href="{{ path('profil') }}">Votre Profil</a>
+        {% endif %}
+        {% if not app.user %}
+            <a href="{{ path('app_login') }}">Se connecter</a>
+            <a href="{{ path('register') }}">S'inscrire</a>
+        {% endif %}
+    </div>
+    <div class="item-container">
+        <h1>Liste des produits</h1>
+        <a href="{{ path('product_new') }}" class="btn">Publier un produit</a> </p>
+        {% for product in products %}
+            <p>{{ product.name }} - {{ product.price }}€</p>
+            <a href="{{ path('cart_add', {'id': product.id}) }}" class="btn">Ajouter au panier</a>
+        {% else %}
+            <p>Aucun produit disponible. </p>
+        {% endfor %}
+    </div> 
+    <div class = "user-products">
+        <a href="{{ path('cart_index') }}" class="btn">accéder à votre panier</a>
+    </div>
 
-    <body>
-
-        <img href="{{asset ('assets/images/logo.svg') }}" alt="Logo">
-
-    </body>
-</html>
-
+{% endblock %}

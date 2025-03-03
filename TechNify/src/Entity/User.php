@@ -56,6 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
+
     /**
      * @var Collection<int, Transaction>
      */
