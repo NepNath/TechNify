@@ -10,7 +10,7 @@ use App\Entity\Product;
 
 final class IndexController extends AbstractController
 {
-    #[Route('/home', name: 'app_index')]
+    #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $products = $entityManager->getRepository(Product::class)->findAll();

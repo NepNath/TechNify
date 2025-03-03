@@ -14,7 +14,6 @@
         <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" class="logo">
       
             {% if app.user %}
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
             <a href="{{ path('profil') }}">Votre Profil</a>
         {% endif %}
         {% if not app.user %}
@@ -24,9 +23,10 @@
     </div>
     <div class="item-container">
         <h1>Liste des produits</h1>
-        <a href="{{ path('product_new') }}" class="btn">Ajouter un produit</a> </p>
+        <a href="{{ path('product_new') }}" class="btn">Publier un produit</a> </p>
         {% for product in products %}
             <p>{{ product.name }} - {{ product.price }}€</p>
+            <a href="{{ path('cart_add', {'id': product.id}) }}" class="btn">Ajouter au panier</a>
         {% else %}
             <p>Aucun produit disponible. </p>
         {% endfor %}
