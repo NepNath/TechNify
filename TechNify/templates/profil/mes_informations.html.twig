@@ -43,27 +43,22 @@
 
         <div class="form-group">
             {{ form_label(form.password) }}
-            {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.password, {'attr': {'class': 'form-control', 'autocomplete': 'new-password'}}) }}
         </div>
 
         <div class="form-group">
-            {{ form_label(form.address) }}
-            {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+            {{ form_label(form.address.address) }}
+            {{ form_widget(form.address.address, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         <div class="form-group">
-            {{ form_label(form.city) }}
-            {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+            {{ form_label(form.address.city) }}
+            {{ form_widget(form.address.city, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         <div class="form-group">
-            {{ form_label(form.postalCode) }}
-            {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}}) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_label(form.phoneNumber) }}
-            {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
+            {{ form_label(form.address.postalCode) }}
+            {{ form_widget(form.address.postalCode, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>

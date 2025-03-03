@@ -20,12 +20,12 @@ class RegisterController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRole('user');
+            $user->setRole('ROLE_USER');
             $user->setPassword(password_hash($user->getPassword(), PASSWORD_BCRYPT));
 
             $entityManager->persist($user);
             $entityManager->flush();
-            
+
             return $this->redirectToRoute('product'); // Redirige vers la liste des produits après inscription
         }
 
