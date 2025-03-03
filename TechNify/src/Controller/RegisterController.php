@@ -25,7 +25,7 @@ class RegisterController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-
+            
             return $this->redirectToRoute('product'); // Redirige vers la liste des produits après inscription
         }
 

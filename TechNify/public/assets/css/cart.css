@@ -24,23 +24,10 @@ body {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.back-button > svg {
-    margin-right: 5px;
-    margin-left: 5px;
-    font-size: 20px;
-    transition: all 0.4s ease-in;
-}
-
-.back-button:hover > svg {
-    font-size: 1.2em;
-    transform: translateX(-5px);
-}
-
 .back-button:hover {
-    box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
     transform: translateY(-2px);
+    box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
 }
-
 
 .panier-container {
     width: 80%;
@@ -54,19 +41,23 @@ body {
     margin-bottom: 20px;
 }
 
-.solde {
-    font-size: 18px;
-    color: #aaa;
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-.montant {
-    color: #4fa3ff;
-    font-size: 24px;
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
 }
 
+th {
+    background: #333;
+}
 
-.prix {
+.prix, .montant {
     color: #4fa3ff;
     font-size: 16px;
 }
@@ -74,6 +65,7 @@ body {
 .quantite {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .quantite button {
@@ -90,15 +82,11 @@ body {
     background: #4fa3ff;
     padding: 15px;
     border-radius: 10px;
-    margin-top: auto; 
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
+    margin-top: 20px;
     text-align: center;
+    width: 60%;
+    margin: 0 auto;
 }
-
 
 .payer {
     background: white;

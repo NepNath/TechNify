@@ -21,7 +21,6 @@ class ProductType extends AbstractType
             ->add('price', MoneyType::class, ['label' => 'Prix'])
             ->add('stock', IntegerType::class, ['label' => 'Stock'])
             ->add('status', TextType::class, ['label' => 'Statut'])
-            ->add('stock', IntegerType::class, ['label' => 'Stock'])
             ->add('save', SubmitType::class, ['label' => 'Ajouter']);
     }
 

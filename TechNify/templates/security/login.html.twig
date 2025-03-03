@@ -1,19 +1,42 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Connexion{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>Connexion</h1>
+<div class="login-container">
+    <div class="sidebar">
+        <div class="logo">
+            {{ include('logo.svg.twig') }}
+        </div>
+    </div>
 
-    {% if error %}
-        <div style="color: red;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <div class="login-form">
+        <h2>Connexion à votre compte</h2>
 
-    <form method="post">
-        <label for="username">Email :</label>
-        <input type="email" id="username" name="_username" value="{{ last_username }}" required autofocus>
+        {% if error %}
+            <div class="error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="_password" required>
+        <form method="post">
+            <div class="input-group">
+                <label for="username">Email :</label>
+                <input type="email" id="username" name="_username" value="{{ last_username }}" required autofocus>
+            </div>
 
-        <button type="submit">Se connecter</button>
-    </form>
+            <div class="input-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="_password" required>
+            </div>
+
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <p class="register-link">
+            <a href="{{ path('register') }}">Pas encore de compte ? Inscrivez-vous.</a>
+        </p>
+    </div>
+</div>
 {% endblock %}

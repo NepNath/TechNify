@@ -1,4 +1,5 @@
 <?php
+// src/Controller/UserController.php
 namespace App\Controller;
 
 use App\Entity\User;
@@ -11,23 +12,30 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/informations", name="user_informations")
-     */
-    public function informations(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/mes-informations', name: 'mes_informations')]
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Récupérer l'utilisateur connecté
         $user = $this->getUser();
+
+        // Créer le formulaire
         $form = $this->createForm(UserType::class, $user);
 
+        // Traiter la soumission du formulaire
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            // Enregistrer les modifications dans la base de données
             $entityManager->flush();
 
-            $this->addFlash('success', 'Vos informations ont été mises à jour.');
-            return $this->redirectToRoute('user_informations');
+            // Ajouter un message flash
+            $this->addFlash('success', 'Vos informations ont été mises à jour avec succès.');
+
+            // Rediriger l'utilisateur
+            return $this->redirectToRoute('mes_informations');
         }
 
-        return $this->render('user/informations.html.twig', [
+        // Afficher le formulaire
+        return $this->render('mes_informations.html.twig', [
             'form' => $form->createView(),
         ]);
     }
