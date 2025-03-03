@@ -20,9 +20,10 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: /home
             logout:
                 path: app_logout
-                target: /
+                target: /home
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
