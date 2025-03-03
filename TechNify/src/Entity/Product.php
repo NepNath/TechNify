@@ -31,10 +31,10 @@ class Product
     #[ORM\Column(length: 50)]
     private ?string $status = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type:'datetime', nullable:true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type:'datetime', nullable:true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -42,6 +42,13 @@ class Product
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?User $seller = null;
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+    $this->createdAt = new \DateTimeImmutable();
+    }
+
 
     /**
      * @var Collection<int, Favorite>
@@ -233,4 +240,5 @@ class Product
 
         return $this;
     }
+
 }

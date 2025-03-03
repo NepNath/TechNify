@@ -33,7 +33,7 @@ class User
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $balance = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $role = null;
 
     #[ORM\Column]
